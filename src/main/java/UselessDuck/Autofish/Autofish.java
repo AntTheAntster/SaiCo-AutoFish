@@ -40,9 +40,11 @@ public class Autofish {
     private Set<String> currentInventoryItems = new HashSet<>();
     private Map<String, Long> itemRemovalTime = new HashMap<>();
     private Configuration config;
+    private InventoryScanner inventoryScanner;
 
     public Autofish() {
         loadConfig();
+        this.inventoryScanner = new InventoryScanner();
     }
 
     private void loadConfig() {
@@ -62,13 +64,17 @@ public class Autofish {
     public void onKeyInput(InputEvent.KeyInputEvent e) {
         if (KeyBinds.AutofishKey.isPressed()) {
             this.AutoFish = !this.AutoFish;
+            if (!this.AutoFish) {
+                // AutoFish is being turned off
+                this.inventoryScanner.triggerFinalCheck();
+            } else {
+                // AutoFish is being turned on
+                this.soundManager.onAutoFishEnabled();
+            }
             String status = this.AutoFish ? "\u00a7aEnabled" : "\u00a7cDisabled";
             String autofishBold = "\u00a7f\u00a7lAuto\u00a7b\u00a7lFish";
             String messageBold = "\u00a7a\u00a7lSaiCo\u00a7d\u00a7lPvP " + autofishBold + " " + status;
             Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent)new ChatComponentTranslation(messageBold, new Object[0]));
-            if (this.AutoFish) {
-                this.soundManager.onAutoFishEnabled();
-            }
         }
     }
 

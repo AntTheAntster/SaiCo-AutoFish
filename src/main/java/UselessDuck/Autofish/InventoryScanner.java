@@ -25,6 +25,7 @@ public class InventoryScanner {
     private SoundManager soundManager;
     private long lastInventoryFullSoundTime = 0L;
     private static final long INVENTORY_FULL_SOUND_COOLDOWN = 10000L;
+    private boolean performingFinalCheck = false;
 
     public InventoryScanner() {
         this.currencyFormatter.setMaximumFractionDigits(0);
@@ -57,6 +58,13 @@ public class InventoryScanner {
             }
         }
     }
+
+    public void triggerFinalCheck() {
+        this.wasEnabled = true;
+        this.disableCounter = 0;
+    }
+
+
 
     private void scanInventory(boolean displayResults) {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -108,11 +116,19 @@ public class InventoryScanner {
         }
     }
 
+
     private Double getItemValue(String itemName) {
+        //Strip Formatting From the Item Names
         String strippedName = this.stripFormatting(itemName).toLowerCase();
+
+        //Legendary Silvefish Aka Button
         if (strippedName.contains("legendary") && strippedName.contains("divine") && strippedName.contains("silver")) {
             return 1000000.0;
         }
+
+
+
+        //Deluxe Divine items
         if (strippedName.contains("deluxe") && strippedName.contains("divine")) {
             if (strippedName.contains("salmon")) {
                 return 250000.0;
@@ -121,6 +137,9 @@ public class InventoryScanner {
                 return 250000.0;
             }
         }
+
+
+        // Divine Items
         if (strippedName.contains("divine")) {
             if (strippedName.contains("pufferfish")) {
                 return 150000.0;
@@ -135,9 +154,13 @@ public class InventoryScanner {
                 return 80000.0;
             }
         }
-        if (strippedName.contains("deluxe") && strippedName.contains("arcane") && strippedName.contains("salmon")) {
+
+        //Deluxe Arcane Items
+        if (strippedName.contains("deluxe") && strippedName.contains("arcane")) {
             return 50000.0;
         }
+
+        //Arcane Items
         if (strippedName.contains("arcane")) {
             if (strippedName.contains("pufferfish")) {
                 return 20000.0;
@@ -146,6 +169,9 @@ public class InventoryScanner {
                 return 20000.0;
             }
         }
+
+
+        //Enchanted Items
         if (strippedName.contains("enchanted")) {
             if (strippedName.contains("fish")) {
                 return 10000.0;
@@ -154,7 +180,9 @@ public class InventoryScanner {
                 return 10000.0;
             }
         }
-        if (strippedName.contains("deluxe")) {
+
+        //Deluxe items
+        if (strippedName.contains("deluxe") && !strippedName.contains("arcane")) {
             if (strippedName.contains("salmon")) {
                 return 6000.0;
             }
@@ -162,6 +190,9 @@ public class InventoryScanner {
                 return 6000.0;
             }
         }
+
+
+        //Normal items
         if (strippedName.contains("prismarine shard")) {
             return 2250.0;
         }
@@ -178,6 +209,9 @@ public class InventoryScanner {
             return 750.0;
         }
         if (strippedName.contains("rod")) {
+            return 0.0;
+        }
+        if (strippedName.contains("lootbag")) {
             return 0.0;
         }
         if (strippedName.contains("fish")) {
