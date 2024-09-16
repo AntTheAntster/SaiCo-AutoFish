@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
@@ -103,7 +105,13 @@ public class InventoryScanner {
 
         if (displayResults) {
             IChatComponent totalComponent = new ChatComponentText("\u00A7a\u00A7lSaiCo\u00A7d\u00A7lPvP You Fished Up \u00A7a" + currencyFormatter.format(totalValue) + " \u00A7a\u00A7lGo \u00A7a\u00A7lSell\u00A7a! \u00A7a\u00A7lSell\u00A7a! \u00A7a\u00A7lSell\u00A7a! ");
-            totalComponent.getChatStyle().setChatHoverEvent(new net.minecraft.event.HoverEvent(net.minecraft.event.HoverEvent.Action.SHOW_TEXT, new ChatComponentText(breakdown.toString())));
+
+            // Add click event to execute "/sell all" command
+            totalComponent.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sell all"));
+
+            // Add hover event to show breakdown
+            totalComponent.getChatStyle().setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText(breakdown.toString())));
+
             Minecraft.getMinecraft().thePlayer.addChatMessage(totalComponent);
         }
 
