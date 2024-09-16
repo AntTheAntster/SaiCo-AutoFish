@@ -54,7 +54,7 @@ public class SoundManager {
             }
         }
 
-        itemCounts.put(itemKey, currentCount);
+        itemCounts.put(itemKey, Math.max(currentCount, previousCount));
         itemRemovalTime.remove(itemKey);
     }
 
