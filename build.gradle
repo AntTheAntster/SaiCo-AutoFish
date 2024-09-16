@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "SpongePowered"
+            url = "https://repo.spongepowered.org/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.0.0"
+group = "UselessDuck.Autofish"
+archivesBaseName = "SaiCo-AutoFish"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+minecraft {
+    version = "1.8.9-11.15.1.2318-1.8.9"
+    runDir = "run"
+    mappings = "stable_20"
+    makeObfSourceJar = false
+    clientJvmArgs += [
+            "-Dmixin.debug.verbose=true",
+            "-Dmixin.debug.export=true",
+            "-Dmixin.dumpTargetOnFailure=true",
+            "-Xmx1024m", "-Xms1024m"
+    ]
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url = "https://repo.spongepowered.org/maven"
+    }
+    maven {
+        url = "https://jitpack.io/"
+    }
+}
+
+dependencies {
+
+    // Mixin Dependencies
+
+    // Include all JAR files in the 'libs' directory
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+
+sourceSets {
+    main {
+        resources {
+            srcDirs 'src/main/resources'
+        }
+    }
+}
+
