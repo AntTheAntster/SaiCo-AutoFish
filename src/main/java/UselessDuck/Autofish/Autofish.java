@@ -48,7 +48,7 @@ public class Autofish {
     private InventoryScanner inventoryScanner;
     private boolean muteFish = false;
     private boolean isMuted = false;
-    private boolean temporaryUnmute = false;
+    private boolean temporaryUnmute = true;
 
 
     public Autofish() {
@@ -60,11 +60,13 @@ public class Autofish {
         config = new Configuration(new File(Minecraft.getMinecraft().mcDataDir, "config/autofish.cfg"));
         config.load();
         soundManagerEnabled = config.getBoolean("soundManagerEnabled", Configuration.CATEGORY_GENERAL, false, "Enable or disable the sound manager");
+        muteFish = config.getBoolean("MuteFish", Configuration.CATEGORY_GENERAL, false, "Enable or disable Mute Fish");
         config.save();
     }
 
     private void saveConfig() {
         config.getCategory(Configuration.CATEGORY_GENERAL).get("soundManagerEnabled").set(soundManagerEnabled);
+        config.getCategory(Configuration.CATEGORY_GENERAL).get("MuteFish").set(muteFish);
         config.save();
     }
 
@@ -90,7 +92,7 @@ public class Autofish {
 
     @SubscribeEvent
     public void onPlaySoundEvent(final PlaySoundEvent event) {
-        boolean isMuteActive = this.isMuteFishEnabled();
+        boolean isMuteActive = config.getBoolean("MuteFish", Configuration.CATEGORY_GENERAL, false, "Enable or disable Mute Fish");
         long currentTime = System.currentTimeMillis();
 
         // Check if the sound should be muted based on the muteFish state
@@ -202,7 +204,10 @@ public class Autofish {
 
     public void toggleMuteFish() {
         this.muteFish = !this.muteFish;
+        config.getCategory(Configuration.CATEGORY_GENERAL).get("MuteFish").set(muteFish);
+        config.save();
     }
+
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent event) {
