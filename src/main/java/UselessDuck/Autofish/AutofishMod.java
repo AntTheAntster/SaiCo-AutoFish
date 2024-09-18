@@ -1,6 +1,5 @@
 package UselessDuck.Autofish;
 
-import UselessDuck.Autofish.command.AutofishCommand;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.SidedProxy;

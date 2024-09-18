@@ -105,9 +105,29 @@ public class Autofish {
                     (soundName.equals("random.orb") && !temporaryUnmute)) {
                 event.result = null;
                 isMuted = true;
+                loadConfig();
             }
         } else {
+            // Restore the event if it was previously muted
+            if (event.result == null) {
+                String soundName = event.sound.getSoundLocation().getResourcePath();
+                if (soundName.equals("random.splash") ||
+                        soundName.equals("game.neutral.swim.splash") ||
+                        soundName.equals("game.neutral.swim") ||
+                        soundName.equals("random.bow") ||
+                        soundName.equals("random.orb")) {
+                    event.result = new PositionedSoundRecord(
+                            event.sound.getSoundLocation(),
+                            event.sound.getVolume(),
+                            event.sound.getPitch(),
+                            event.sound.getXPosF(),
+                            event.sound.getYPosF(),
+                            event.sound.getZPosF()
+                    );
+                }
+            }
             isMuted = false;
+            loadConfig();
         }
 
         // Reset temporary unmute after the sound has been played
@@ -205,7 +225,7 @@ public class Autofish {
     public void toggleMuteFish() {
         this.muteFish = !this.muteFish;
         config.getCategory(Configuration.CATEGORY_GENERAL).get("MuteFish").set(muteFish);
-        config.save();
+        saveConfig();
     }
 
 

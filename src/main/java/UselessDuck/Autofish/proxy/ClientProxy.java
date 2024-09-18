@@ -10,7 +10,7 @@
 package UselessDuck.Autofish.proxy;
 
 import UselessDuck.Autofish.Autofish;
-import UselessDuck.Autofish.command.AutofishCommand;
+import UselessDuck.Autofish.command.Tomm1kCommand;
 import UselessDuck.Autofish.command.MuteFishCommand;
 import net.minecraft.command.ICommand;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -26,7 +26,7 @@ public class ClientProxy
 
     @Override
     public void initMod() {
-        ClientCommandHandler.instance.registerCommand((ICommand)new AutofishCommand());
+        ClientCommandHandler.instance.registerCommand((ICommand)new Tomm1kCommand());
         ClientCommandHandler.instance.registerCommand((ICommand)new MuteFishCommand());
 
     }
