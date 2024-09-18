@@ -3,14 +3,19 @@ package UselessDuck.Autofish;
 import UselessDuck.Autofish.Keybind.KeyBinds;
 import UselessDuck.Autofish.SoundManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.ChatLine;
+import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -20,10 +25,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
+import net.minecraft.client.gui.ChatLine;
+import org.lwjgl.Sys;
 
 public class Autofish {
     public static Autofish instance = new Autofish();
@@ -41,6 +46,10 @@ public class Autofish {
     private Map<String, Long> itemRemovalTime = new HashMap<>();
     private Configuration config;
     private InventoryScanner inventoryScanner;
+    private boolean muteFish = false;
+    private boolean isMuted = false;
+    private boolean temporaryUnmute = false;
+
 
     public Autofish() {
         loadConfig();
@@ -60,7 +69,7 @@ public class Autofish {
     }
 
     @SubscribeEvent
-    @SideOnly(value=Side.CLIENT)
+    @SideOnly(value = Side.CLIENT)
     public void onKeyInput(InputEvent.KeyInputEvent e) {
         if (KeyBinds.AutofishKey.isPressed()) {
             this.AutoFish = !this.AutoFish;
@@ -74,17 +83,39 @@ public class Autofish {
             String status = this.AutoFish ? "\u00a7aEnabled" : "\u00a7cDisabled";
             String autofishBold = "\u00a7f\u00a7lAuto\u00a7b\u00a7lFish";
             String messageBold = "\u00a7a\u00a7lSaiCo\u00a7d\u00a7lPvP " + autofishBold + " " + status;
-            Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent)new ChatComponentTranslation(messageBold, new Object[0]));
+            Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBold, new Object[0]));
         }
     }
 
+
     @SubscribeEvent
-    public void onPlaySoundEvent(final PlaySoundEvent event) throws InterruptedException {
-        final Minecraft mc = Minecraft.getMinecraft();
+    public void onPlaySoundEvent(final PlaySoundEvent event) {
+        boolean isMuteActive = this.isMuteFishEnabled();
         long currentTime = System.currentTimeMillis();
+
+        // Check if the sound should be muted based on the muteFish state
+        if (isMuteActive) {
+            String soundName = event.sound.getSoundLocation().getResourcePath();
+            if (soundName.equals("random.splash") ||
+                    soundName.equals("game.neutral.swim.splash") ||
+                    soundName.equals("game.neutral.swim") ||
+                    soundName.equals("random.bow") ||
+                    (soundName.equals("random.orb") && !temporaryUnmute)) {
+                event.result = null;
+                isMuted = true;
+            }
+        } else {
+            isMuted = false;
+        }
+
+        // Reset temporary unmute after the sound has been played
+        if (temporaryUnmute && event.sound.getSoundLocation().getResourcePath().equals("random.orb")) {
+            temporaryUnmute = false;
+        }
+
         if (AutoFish && mc.theWorld != null && mc.thePlayer != null && mc.thePlayer.getHeldItem() != null
                 && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod
-                && event.name.toString().equals("random.splash")
+                && event.sound.getSoundLocation().getResourcePath().equals("random.splash")
                 && currentTime - lastCastTime > CAST_COOLDOWN) {
 
             mc.playerController.sendUseItem((EntityPlayer)mc.thePlayer, (World)mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
@@ -112,7 +143,7 @@ public class Autofish {
             if (player != null && instance.isAutoFishEnabled()) {
                 ItemStack heldItem = player.getHeldItem();
                 if (heldItem != null && heldItem.getItem() instanceof ItemFishingRod) {
-                    if (this.isFishingRodCast((EntityPlayer)player)) {
+                    if (this.isFishingRodCast((EntityPlayer) player)) {
                         ++this.castRodTimer;
                         if (this.castRodTimer >= CAST_ROD_DELAY) {
                             this.castRodTimer = 0;
@@ -163,5 +194,31 @@ public class Autofish {
     public void toggleSoundManager() {
         this.soundManagerEnabled = !this.soundManagerEnabled;
         saveConfig();
+    }
+
+    public boolean isMuteFishEnabled() {
+        return muteFish;
+    }
+
+    public void toggleMuteFish() {
+        this.muteFish = !this.muteFish;
+    }
+
+    @SubscribeEvent
+    public void onClientChatReceived(ClientChatReceivedEvent event) {
+        IChatComponent chatComponent = event.message;
+        String chatMessage = chatComponent.getUnformattedText();
+
+
+        // Check if the chat message contains "-> me"
+        if (chatMessage.contains("-> me]")) {
+            temporaryUnmute = true;
+            playRandomOrbSound();
+        }
+    }
+
+    private void playRandomOrbSound() {
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("random.orb"), 1.0F));
     }
 }
