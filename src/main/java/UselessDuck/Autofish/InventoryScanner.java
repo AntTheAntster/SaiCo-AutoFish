@@ -204,7 +204,7 @@ public class InventoryScanner {
         if (strippedName.contains("prismarine shard")) {
             return 2250.0;
         }
-        if (strippedName.contains("squid")) {
+        if (strippedName.contains("squid") && !strippedName.contains("mask") ) {
             return 2250.0;
         }
         if (strippedName.contains("pufferfish")) {
