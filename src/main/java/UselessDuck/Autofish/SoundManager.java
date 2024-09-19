@@ -28,7 +28,7 @@ public class SoundManager {
     }
 
     public void checkAndPlaySound(ItemStack itemStack) {
-        if (itemStack == null) return;
+        if (itemStack == null || isInitialScan) return;
 
         String itemKey = generateItemKey(itemStack);
         currentInventoryItems.add(itemKey);
@@ -58,6 +58,7 @@ public class SoundManager {
         itemRemovalTime.remove(itemKey);
     }
 
+
     public void finishInventoryScan() {
         Set<String> removedItems = new HashSet<>(itemCounts.keySet());
         removedItems.removeAll(currentInventoryItems);
@@ -68,7 +69,7 @@ public class SoundManager {
         }
 
         itemCounts.keySet().retainAll(currentInventoryItems);
-        isInitialScan = false;
+        isInitialScan = false;  // Set to false after the first scan is complete
     }
 
     private String generateItemKey(ItemStack itemStack) {
@@ -101,7 +102,7 @@ public class SoundManager {
         this.itemRemovalTime.clear();
         this.lastSoundPlayTime.clear();
         this.soundPlayedThisScan.clear();
-        this.isInitialScan = true;
+        this.isInitialScan = true;  // Reset to true when counts are reset
     }
 
     public void playCastRodSound() {

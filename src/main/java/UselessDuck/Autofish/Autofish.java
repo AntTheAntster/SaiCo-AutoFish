@@ -49,6 +49,10 @@ public class Autofish {
     private boolean muteFish = false;
     private boolean isMuted = false;
     private boolean temporaryUnmute = true;
+    private long lastOrbSoundTime = 0;
+    private static final long ORB_SOUND_COOLDOWN = 1000; // 1 second cooldown
+    private long lastUnmuteTime = 0;
+    private static final long UNMUTE_DURATION = 1000; // 1 second in milliseconds
 
 
     public Autofish() {
@@ -93,47 +97,25 @@ public class Autofish {
     @SubscribeEvent
     public void onPlaySoundEvent(final PlaySoundEvent event) {
         boolean isMuteActive = config.getBoolean("MuteFish", Configuration.CATEGORY_GENERAL, false, "Enable or disable Mute Fish");
+        String soundName = event.sound.getSoundLocation().getResourcePath();
         long currentTime = System.currentTimeMillis();
 
-        // Check if the sound should be muted based on the muteFish state
         if (isMuteActive) {
-            String soundName = event.sound.getSoundLocation().getResourcePath();
             if (soundName.equals("random.splash") ||
                     soundName.equals("game.neutral.swim.splash") ||
                     soundName.equals("game.neutral.swim") ||
                     soundName.equals("random.bow") ||
-                    (soundName.equals("random.orb") && !temporaryUnmute)) {
-                event.result = null;
-                isMuted = true;
+                    soundName.equals("random.orb")) {
                 loadConfig();
-            }
-        } else {
-            // Restore the event if it was previously muted
-            if (event.result == null) {
-                String soundName = event.sound.getSoundLocation().getResourcePath();
-                if (soundName.equals("random.splash") ||
-                        soundName.equals("game.neutral.swim.splash") ||
-                        soundName.equals("game.neutral.swim") ||
-                        soundName.equals("random.bow") ||
-                        soundName.equals("random.orb")) {
-                    event.result = new PositionedSoundRecord(
-                            event.sound.getSoundLocation(),
-                            event.sound.getVolume(),
-                            event.sound.getPitch(),
-                            event.sound.getXPosF(),
-                            event.sound.getYPosF(),
-                            event.sound.getZPosF()
-                    );
+
+                if (currentTime - lastUnmuteTime < UNMUTE_DURATION) {
+                } else {
+                    event.result = null;
                 }
             }
-            isMuted = false;
             loadConfig();
         }
 
-        // Reset temporary unmute after the sound has been played
-        if (temporaryUnmute && event.sound.getSoundLocation().getResourcePath().equals("random.orb")) {
-            temporaryUnmute = false;
-        }
 
         if (AutoFish && mc.theWorld != null && mc.thePlayer != null && mc.thePlayer.getHeldItem() != null
                 && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod
@@ -231,19 +213,18 @@ public class Autofish {
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent event) {
-        IChatComponent chatComponent = event.message;
-        String chatMessage = chatComponent.getUnformattedText();
+        String chatMessage = event.message.getUnformattedText();
 
 
-        // Check if the chat message contains "-> me"
         if (chatMessage.contains("-> me]")) {
-            temporaryUnmute = true;
-            playRandomOrbSound();
+            lastUnmuteTime = System.currentTimeMillis();
         }
     }
+
 
     private void playRandomOrbSound() {
         Minecraft mc = Minecraft.getMinecraft();
         mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("random.orb"), 1.0F));
+        lastOrbSoundTime = System.currentTimeMillis();
     }
 }
