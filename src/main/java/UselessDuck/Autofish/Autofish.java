@@ -4,9 +4,11 @@ import UselessDuck.Autofish.Keybind.KeyBinds;
 import UselessDuck.Autofish.SoundManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiNewChat;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.ItemFishingRod;
@@ -89,7 +91,14 @@ public class Autofish {
             String status = this.AutoFish ? "\u00a7aEnabled" : "\u00a7cDisabled";
             String autofishBold = "\u00a7f\u00a7lAuto\u00a7b\u00a7lFish";
             String messageBold = "\u00a7a\u00a7lSaiCo\u00a7d\u00a7lPvP " + autofishBold + " " + status;
+            String messageBoldSound = "\u00a7a\u00a7lPlease Enable Sound\u00a7d\u00a7l For it to work ";
+
+
             Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBold, new Object[0]));
+            float masterVolume = mc.gameSettings.getSoundLevel(SoundCategory.MASTER);
+            if (masterVolume == 0.0F) {
+                Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBoldSound, new Object[0]));;
+            }
         }
     }
 
@@ -100,7 +109,8 @@ public class Autofish {
         String soundName = event.sound.getSoundLocation().getResourcePath();
         long currentTime = System.currentTimeMillis();
 
-        if (isMuteActive) {
+        if (isMuteActive && mc.thePlayer.getHeldItem() != null
+                && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod) {
             if (soundName.equals("random.splash") ||
                     soundName.equals("game.neutral.swim.splash") ||
                     soundName.equals("game.neutral.swim") ||
