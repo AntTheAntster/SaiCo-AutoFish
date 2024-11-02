@@ -109,8 +109,7 @@ public class Autofish {
         String soundName = event.sound.getSoundLocation().getResourcePath();
         long currentTime = System.currentTimeMillis();
 
-        if (isMuteActive && mc.thePlayer.getHeldItem() != null
-                && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod) {
+        if (mc.theWorld != null && mc.thePlayer != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod && isMuteActive) {
             if (soundName.equals("random.splash") ||
                     soundName.equals("game.neutral.swim.splash") ||
                     soundName.equals("game.neutral.swim") ||
@@ -138,7 +137,7 @@ public class Autofish {
             // Schedule the second cast after a short delay
             new Thread(() -> {
                 try {
-                    Thread.sleep(138);
+                    Thread.sleep(137);
                     mc.addScheduledTask(() -> {
                         mc.playerController.sendUseItem((EntityPlayer)mc.thePlayer, (World)mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
                     });
