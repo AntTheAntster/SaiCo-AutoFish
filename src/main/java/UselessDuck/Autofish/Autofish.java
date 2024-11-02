@@ -109,7 +109,7 @@ public class Autofish {
         String soundName = event.sound.getSoundLocation().getResourcePath();
         long currentTime = System.currentTimeMillis();
 
-        if (mc.theWorld != null && mc.thePlayer != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod && isMuteActive) {
+        if (mc.theWorld != null && mc.thePlayer != null && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod && isMuteActive) {
             if (soundName.equals("random.splash") ||
                     soundName.equals("game.neutral.swim.splash") ||
                     soundName.equals("game.neutral.swim") ||
