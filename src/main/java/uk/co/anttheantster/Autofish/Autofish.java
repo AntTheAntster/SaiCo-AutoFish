@@ -1,6 +1,9 @@
 package uk.co.anttheantster.Autofish;
 
-import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -48,6 +51,8 @@ public class Autofish {
     private static final long ORB_SOUND_COOLDOWN = 1000; // 1 second cooldown
     private long lastUnmuteTime = 0;
     private static final long UNMUTE_DURATION = 1000; // 1 second in milliseconds
+    public static ArrayList<String> blacklistedItems = new ArrayList<>();
+    public static ArrayList<String> whitelistedItems = new ArrayList<>();
 
 
     public Autofish() {
@@ -132,10 +137,13 @@ public class Autofish {
                 try {
                     Thread.sleep(137);
                     mc.addScheduledTask(() -> {
-                        mc.thePlayer.sendChatMessage("/sell all");
-                        mc.thePlayer.addChatMessage(new ChatComponentTranslation("Selling All!"));
                         mc.playerController.sendUseItem((EntityPlayer)mc.thePlayer, (World)mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
                     });
+
+                    int sleepRandom = new Random().nextInt(4);
+                    Thread.sleep(sleepRandom * 1000);
+                    
+                    checkInventory();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -219,7 +227,6 @@ public class Autofish {
     public void onClientChatReceived(ClientChatReceivedEvent event) {
         String chatMessage = event.message.getUnformattedText();
 
-
         if (chatMessage.contains("-> me]")) {
             lastUnmuteTime = System.currentTimeMillis();
         }
@@ -230,5 +237,22 @@ public class Autofish {
         Minecraft mc = Minecraft.getMinecraft();
         mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("random.orb"), 1.0F));
         lastOrbSoundTime = System.currentTimeMillis();
+    }
+
+    private void checkInventory() {
+        for (ItemStack stack : mc.thePlayer.inventory.mainInventory) {
+            if (stack != null) {
+                String itemName = stack.getItem().getRegistryName();
+
+                for (String item : blacklistedItems){
+                    if (itemName.equals(item)){
+                        mc.thePlayer.addChatMessage(new ChatComponentTranslation(item + " is Found! Selling!"));
+                        mc.thePlayer.sendChatMessage("/sell all");
+                    }
+
+                }
+            }
+
+        }
     }
 }

@@ -27,5 +27,20 @@ public class AutofishMod {
     public void init(final FMLInitializationEvent event) {
         AutofishMod.proxy.initMod();
         KeyBinds.register();
+        populateLists();
+    }
+
+    private void populateLists() {
+        Autofish.blacklistedItems.add("minecraft:fish");
+        Autofish.blacklistedItems.add("minecraft:prismarine_shard");
+        Autofish.blacklistedItems.add("minecraft:cooked_fish");
+        Autofish.blacklistedItems.add("minecraft:dye");
+
+        Autofish.whitelistedItems.add("minecraft:paper");
+        Autofish.whitelistedItems.add("minecraft:blaze_powder");
+        Autofish.whitelistedItems.add("minecraft:chest");
+        Autofish.whitelistedItems.add("minecraft:player_head");
+        Autofish.whitelistedItems.add("minecraft:prismarine_crystals");
+        Autofish.whitelistedItems.add("minecraft:nether_quartz");
     }
 }

@@ -11,6 +11,7 @@ public class KeyBinds {
     }
 
     public static void register() {
-        ClientRegistry.registerKeyBinding(KeyBinds.AutofishKey = new KeyBinding(new ChatComponentTranslation("Saico AutoFish", new Object[0]).getFormattedText(), 68, "Saico AutoFish"));
+        ClientRegistry.registerKeyBinding(KeyBinds.AutofishKey = new KeyBinding(new ChatComponentTranslation("Ant's AutoFish",
+                new Object[0]).getFormattedText(), 68, "Ant's AutoFish"));
     }
 }

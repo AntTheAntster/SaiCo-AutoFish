@@ -1,0 +1,47 @@
+{
+  "CastUrRod": {
+    "subtitle": "Casting the fishing rod",
+    "sounds": [
+      {
+        "name": "autofish:CastUrRod",
+        "stream": false
+      }
+    ]
+  },
+  "Bigfish": {
+    "subtitle": "Caught a big fish",
+    "sounds": [
+      {
+        "name": "autofish:Bigfish",
+        "stream": false
+      }
+    ]
+  },
+  "GrindGrindGrind": {
+    "subtitle": "Grinding",
+    "sounds": [
+      {
+        "name": "autofish:GrindGrindGrind",
+        "stream": false
+      }
+    ]
+  },
+  "Treasure": {
+    "subtitle": "Found a treasure",
+    "sounds": [
+      {
+        "name": "autofish:Treasure",
+        "stream": false
+      }
+    ]
+  },
+  "SellSellSell": {
+    "subtitle": "Selling items",
+    "sounds": [
+      {
+        "name": "autofish:SellSellSell",
+        "stream": false
+      }
+    ]
+  }
+}
