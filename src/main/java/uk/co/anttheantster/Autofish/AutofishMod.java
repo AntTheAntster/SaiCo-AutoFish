@@ -1,20 +1,18 @@
-package UselessDuck.Autofish;
+package uk.co.anttheantster.Autofish;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.SidedProxy;
-import UselessDuck.Autofish.proxy.CommonProxy;
+import uk.co.anttheantster.Autofish.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.MinecraftForge;
-import UselessDuck.Autofish.Keybind.KeyBinds;
+import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
 
-@Mod(modid = "SaiCoPvP_Autofish", name = "SaiCoPvP Autofish", version = "1.0.0", acceptedMinecraftVersions = "[1.8.9]")
+@Mod(modid = AutofishMod.ModID)
 public class AutofishMod {
-    public static final String ModID = "SaiCoPvP Autofish";
-    public static final String ModName = "SaiCoPvP Autofish";
-    public static final String ModVersion = "1.0.0";
+    public static final String ModID = "anssaicoautofish";
     @Mod.Instance("Autofish")
-    @SidedProxy(clientSide = "UselessDuck.Autofish.proxy.ClientProxy", serverSide = "UselessDuck.Autofish.CommonProxy")
+    @SidedProxy(clientSide = "uk.co.anttheantster.Autofish.proxy.ClientProxy", serverSide = "uk.co.anttheantster.Autofish.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler

@@ -1,29 +1,25 @@
 buildscript {
     repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "SpongePowered"
-            url = "https://repo.spongepowered.org/maven"
-        }
+        //new forge repository
+        maven { url "https://maven.minecraftforge.net" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+plugins {
+    id "java"
+}
 
-version = ""
-group = "UselessDuck.Autofish"
-archivesBaseName = "SaiCo-AutoFish"
+apply plugin: "net.minecraftforge.gradle.forge"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+version = "1.4.0"
+group = "uk.co.anttheantster.autofish"
+archivesBaseName = "Ant's Saico AutoFish"
+
+sourceCompatibility = targetCompatibility = 1.8 //using java 8
+compileJava.options.encoding = "UTF-8"
 
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"
@@ -38,31 +34,45 @@ minecraft {
     ]
 }
 
+configurations {
+    shade
+    compile.extendsFrom(shade)
+}
+
 repositories {
-    mavenCentral()
-    jcenter()
+
     maven {
-        url = "https://repo.spongepowered.org/maven"
+        name = "forge"
+        url = "http://files.minecraftforge.net/maven"
     }
     maven {
-        url = "https://jitpack.io/"
+        name = "SpongePowered"
+        url = "https://repo.spongepowered.org/maven"
     }
 }
 
 dependencies {
-
-    // Mixin Dependencies
-
-    // Include all JAR files in the 'libs' directory
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
+processResources {
+    //this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-sourceSets {
-    main {
-        resources {
-            srcDirs 'src/main/resources'
-        }
+    //replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include "mcmod.info"
+
+        //replace version and mcversion
+        expand "version":project.version, "mcversion":project.minecraft.version
     }
+
+    //copy everything else, that"s not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "mcmod.info"
+    }
+
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 

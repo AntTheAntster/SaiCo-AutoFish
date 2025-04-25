@@ -1,4 +1,4 @@
-package UselessDuck.Autofish.Keybind;
+package uk.co.anttheantster.Autofish.Keybind;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraft.util.ChatComponentTranslation;

@@ -1,4 +1,4 @@
-package UselessDuck.Autofish;
+package uk.co.anttheantster.Autofish;
 
 import java.text.NumberFormat;
 import java.util.HashMap;

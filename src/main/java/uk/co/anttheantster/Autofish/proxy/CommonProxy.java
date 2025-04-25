@@ -1,5 +1,5 @@
 
-package UselessDuck.Autofish.proxy;
+package uk.co.anttheantster.Autofish.proxy;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 

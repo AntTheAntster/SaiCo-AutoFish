@@ -1,14 +1,11 @@
-package UselessDuck.Autofish;
+package uk.co.anttheantster.Autofish;
 
-import UselessDuck.Autofish.Keybind.KeyBinds;
-import UselessDuck.Autofish.SoundManager;
+import net.minecraftforge.client.ClientCommandHandler;
+import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.ChatLine;
-import net.minecraft.client.gui.GuiNewChat;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.ItemFishingRod;
@@ -24,13 +21,9 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 import java.util.*;
-import java.util.List;
-import net.minecraft.client.gui.ChatLine;
-import org.lwjgl.Sys;
 
 public class Autofish {
     public static Autofish instance = new Autofish();
@@ -139,6 +132,8 @@ public class Autofish {
                 try {
                     Thread.sleep(137);
                     mc.addScheduledTask(() -> {
+                        mc.thePlayer.sendChatMessage("/sell all");
+                        mc.thePlayer.addChatMessage(new ChatComponentTranslation("Selling All!"));
                         mc.playerController.sendUseItem((EntityPlayer)mc.thePlayer, (World)mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
                     });
                 } catch (InterruptedException e) {

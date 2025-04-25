@@ -1,6 +1,5 @@
-package UselessDuck.Autofish;
+package uk.co.anttheantster.Autofish;
 
-import UselessDuck.Autofish.Autofish;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

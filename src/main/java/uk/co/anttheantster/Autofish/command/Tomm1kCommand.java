@@ -1,37 +1,31 @@
-package UselessDuck.Autofish.command;
+package uk.co.anttheantster.Autofish.command;
 
-import UselessDuck.Autofish.Autofish;
+import uk.co.anttheantster.Autofish.Autofish;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 
-public class MuteFishCommand extends CommandBase {
-    @Override
+public class Tomm1kCommand extends CommandBase {
     public String getCommandName() {
-        return "mutefish";
+        return "tomm1k";
     }
 
-    @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/mutefish";
+        return "/tomm1k";
     }
 
-    @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-
-        Autofish.instance.toggleMuteFish();
-        String status = Autofish.instance.isMuteFishEnabled() ? "\u00a7aEnabled" : "\u00a7cDisabled";
-        sender.addChatMessage((IChatComponent)new ChatComponentText("\u00a7a\u00a7lMuteFish " + status));
+        Autofish.instance.toggleSoundManager();
+        String status = Autofish.instance.isSoundManagerEnabled() ? "\u00a7aEnabled" : "\u00a7cDisabled";
+        sender.addChatMessage((IChatComponent)new ChatComponentText("\u00a7a\u00a7lSaiCo\u00a7d\u00a7lPvP Sound Manager " + status));
     }
 
-    @Override
     public boolean canCommandSenderUseCommand(ICommandSender sender) {
         return true;
     }
 
-    @Override
     public int getRequiredPermissionLevel() {
         return 0;
     }

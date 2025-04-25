@@ -1,0 +1,16 @@
+[
+{
+  "modid": "antssaicoautofish",
+  "name": "Ant's Saico AutoFish",
+  "description": "Edit of UselessDuck's AutoFish mod for Saico.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://anttheantster.co.uk",
+  "updateUrl": "https://anttheantster.co.uk",
+  "authorList": ["AntTheAntster"],
+  "credits": "UselessDuck",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

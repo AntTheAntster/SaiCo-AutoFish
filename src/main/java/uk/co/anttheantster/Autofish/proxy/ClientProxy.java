@@ -7,11 +7,11 @@
  *  net.minecraftforge.common.MinecraftForge
  *  net.minecraftforge.fml.common.event.FMLPreInitializationEvent
  */
-package UselessDuck.Autofish.proxy;
+package uk.co.anttheantster.Autofish.proxy;
 
-import UselessDuck.Autofish.Autofish;
-import UselessDuck.Autofish.command.Tomm1kCommand;
-import UselessDuck.Autofish.command.MuteFishCommand;
+import uk.co.anttheantster.Autofish.Autofish;
+import uk.co.anttheantster.Autofish.command.Tomm1kCommand;
+import uk.co.anttheantster.Autofish.command.MuteFishCommand;
 import net.minecraft.command.ICommand;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
