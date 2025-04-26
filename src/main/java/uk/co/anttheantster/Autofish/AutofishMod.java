@@ -10,7 +10,7 @@ import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
 
 @Mod(modid = AutofishMod.ModID)
 public class AutofishMod {
-    public static final String ModID = "anssaicoautofish";
+    public static final String ModID = "antssaicoautofish";
     @Mod.Instance("Autofish")
     @SidedProxy(clientSide = "uk.co.anttheantster.Autofish.proxy.ClientProxy", serverSide = "uk.co.anttheantster.Autofish.CommonProxy")
     public static CommonProxy proxy;
@@ -41,6 +41,6 @@ public class AutofishMod {
         Autofish.whitelistedItems.add("minecraft:chest");
         Autofish.whitelistedItems.add("minecraft:player_head");
         Autofish.whitelistedItems.add("minecraft:prismarine_crystals");
-        Autofish.whitelistedItems.add("minecraft:nether_quartz");
+        Autofish.whitelistedItems.add("minecraft:quartz");
     }
 }

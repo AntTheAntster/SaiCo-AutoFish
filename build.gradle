@@ -14,9 +14,9 @@ plugins {
 
 apply plugin: "net.minecraftforge.gradle.forge"
 
-version = "1.4.1"
+version = "1.4.2"
 group = "uk.co.anttheantster.autofish"
-archivesBaseName = "AntsSaicoAutoFish"
+archivesBaseName = "Ant's Saico AutoFish"
 
 sourceCompatibility = targetCompatibility = 1.8 //using java 8
 compileJava.options.encoding = "UTF-8"

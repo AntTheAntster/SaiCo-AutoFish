@@ -53,6 +53,8 @@ public class Autofish {
     private static final long UNMUTE_DURATION = 1000; // 1 second in milliseconds
     public static ArrayList<String> blacklistedItems = new ArrayList<>();
     public static ArrayList<String> whitelistedItems = new ArrayList<>();
+    public boolean sellEnabled;
+    public String sellPrefix = "§f§lAuto§b§lSell";;
 
 
     public Autofish() {
@@ -86,10 +88,11 @@ public class Autofish {
                 // AutoFish is being turned on
                 this.soundManager.onAutoFishEnabled();
             }
-            String status = this.AutoFish ? "\u00a7aEnabled" : "\u00a7cDisabled";
-            String autofishBold = "\u00a7f\u00a7lAuto\u00a7b\u00a7lFish";
-            String messageBold = "\u00a7a\u00a7lSaiCo\u00a7d\u00a7lPvP " + autofishBold + " " + status;
-            String messageBoldSound = "\u00a7a\u00a7lPlease Enable Sound\u00a7d\u00a7l For it to work ";
+
+            String status = this.AutoFish ? "§aEnabled" : "§cDisabled";
+            String autofishBold = "§f§lAuto§b§lFish";
+            String messageBold = "§c§lAnt's Saico Fish " + autofishBold + " " + status;
+            String messageBoldSound = "§c§lPlease Enable Sound§d§l For it to work ";
 
 
             Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBold, new Object[0]));
@@ -97,6 +100,16 @@ public class Autofish {
             if (masterVolume == 0.0F) {
                 Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBoldSound, new Object[0]));;
             }
+        }
+
+        if (KeyBinds.AutoSellKey.isPressed()) {
+            this.sellEnabled = !this.sellEnabled;
+
+            String status = this.sellEnabled ? "§aEnabled" : "§cDisabled";
+            String autosellBold = "§f§lAuto§b§lSell";
+            String messageBold = "§c§lAnt's SaiCo Fish " + autosellBold + " " + status;
+
+            mc.thePlayer.addChatMessage(new ChatComponentTranslation(messageBold, new Object[0]));
         }
     }
 
@@ -142,8 +155,10 @@ public class Autofish {
 
                     int sleepRandom = new Random().nextInt(4);
                     Thread.sleep(sleepRandom * 1000);
-                    
-                    checkInventory();
+
+                    if (sellEnabled) {
+                        inventoryHandler();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -239,14 +254,14 @@ public class Autofish {
         lastOrbSoundTime = System.currentTimeMillis();
     }
 
-    private void checkInventory() {
+    private void inventoryHandler() {
         for (ItemStack stack : mc.thePlayer.inventory.mainInventory) {
             if (stack != null) {
                 String itemName = stack.getItem().getRegistryName();
 
                 for (String item : blacklistedItems){
                     if (itemName.equals(item)){
-                        mc.thePlayer.addChatMessage(new ChatComponentTranslation(item + " is Found! Selling!"));
+                        mc.thePlayer.addChatMessage(new ChatComponentTranslation(sellPrefix + "§e" + item + " §bis Found! Selling!"));
                         mc.thePlayer.sendChatMessage("/sell all");
                     }
 
@@ -254,5 +269,19 @@ public class Autofish {
             }
 
         }
+
+        /*
+        for (ItemStack stack : mc.thePlayer.inventory.mainInventory) {
+            if (stack != null) {
+                String itemName = stack.getItem().getRegistryName();
+
+                for (String item : whitelistedItems){
+                    mc.thePlayer.addChatMessage(new ChatComponentTranslation(item + " is Found! Storing!"));
+                    
+                }
+            }
+        }
+
+         */
     }
 }
