@@ -54,7 +54,8 @@ public class Autofish {
     public static ArrayList<String> blacklistedItems = new ArrayList<>();
     public static ArrayList<String> whitelistedItems = new ArrayList<>();
     public boolean sellEnabled;
-    public String sellPrefix = "§f§lAuto§b§lSell";;
+    public String sellPrefix = "§f§lAuto§b§lSell";
+    public boolean sellQueued;
 
 
     public Autofish() {
@@ -153,11 +154,16 @@ public class Autofish {
                         mc.playerController.sendUseItem((EntityPlayer)mc.thePlayer, (World)mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
                     });
 
+                    if (sellQueued){
+                        return;
+                    }
                     int sleepRandom = new Random().nextInt(4);
                     Thread.sleep(sleepRandom * 1000);
+                    sellQueued = true;
 
                     if (sellEnabled) {
                         inventoryHandler();
+                        sellQueued = false;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -261,7 +267,6 @@ public class Autofish {
 
                 for (String item : blacklistedItems){
                     if (itemName.equals(item)){
-                        mc.thePlayer.addChatMessage(new ChatComponentTranslation(sellPrefix + "§e" + item + " §bis Found! Selling!"));
                         mc.thePlayer.sendChatMessage("/sell all");
                     }
 
