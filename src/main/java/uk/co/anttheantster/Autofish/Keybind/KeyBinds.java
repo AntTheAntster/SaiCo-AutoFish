@@ -7,9 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 public class KeyBinds {
     public static KeyBinding AutofishKey;
-    public static KeyBinding AutoSellKey;
-    public static KeyBinding AutoEatKey;
-    public static KeyBinding DebugKey;
+    public static KeyBinding FishingModeKey;
 
     public KeyBinds() {
     }
@@ -18,10 +16,7 @@ public class KeyBinds {
         ClientRegistry.registerKeyBinding(KeyBinds.AutofishKey = new KeyBinding(new ChatComponentTranslation("Ant's AutoFish",
                 new Object[0]).getFormattedText(), Keyboard.KEY_F10, "Ant's Utilities"));
 
-        ClientRegistry.registerKeyBinding(KeyBinds.AutoSellKey = new KeyBinding(new ChatComponentTranslation("Ant's AutoSell",
+        ClientRegistry.registerKeyBinding(KeyBinds.FishingModeKey = new KeyBinding(new ChatComponentTranslation("Ant's FishingMode",
                 new Object[0]).getFormattedText(), Keyboard.KEY_F9, "Ant's Utilities"));
-
-        ClientRegistry.registerKeyBinding(KeyBinds.AutoEatKey = new KeyBinding(new ChatComponentTranslation("Ant's AutoEat",
-                new Object[0]).getFormattedText(), Keyboard.KEY_F8, "Ant's Utilities"));
     }
 }

@@ -14,24 +14,7 @@ public class AutoEat {
 
     protected static final Minecraft mc = Minecraft.getMinecraft();
 
-    public boolean autoEatEnabled;
-
     private boolean commandQueued = false;
-
-
-    @SubscribeEvent
-    @SideOnly(value = Side.CLIENT)
-    public void onKeyInput(InputEvent.KeyInputEvent e) {
-        if (KeyBinds.AutoEatKey.isPressed()) {
-            this.autoEatEnabled = !this.autoEatEnabled;
-
-            String status = this.autoEatEnabled ? "§aEnabled!" : "§cDisabled!";
-            String prefix = "§eAuto§bEat ";
-            String message = prefix + status;
-
-            mc.thePlayer.addChatMessage(new ChatComponentTranslation(message));
-        }
-    }
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
@@ -48,7 +31,7 @@ public class AutoEat {
         String prefix = "§bAuto§eEat ";
         int hunger = mc.thePlayer.getFoodStats().getFoodLevel();
 
-        if (this.autoEatEnabled) {
+        if (Config.instance.autoEatEnabled) {
             if (hunger < 18){
                 if (!commandQueued) {
                     mc.thePlayer.sendChatMessage("/eat");

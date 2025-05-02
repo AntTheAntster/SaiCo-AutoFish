@@ -52,7 +52,7 @@ public class Autofish {
     private static final long UNMUTE_DURATION = 1000; // 1 second in milliseconds
     public static ArrayList<String> blacklistedItems = new ArrayList<>();
     public static ArrayList<String> whitelistedItems = new ArrayList<>();
-    public boolean sellEnabled;
+    public boolean fishingEnabled;
     public String sellPrefix = "§f§lAuto§b§lSell";
     public boolean sellQueued;
 
@@ -102,11 +102,12 @@ public class Autofish {
             }
         }
 
-        if (KeyBinds.AutoSellKey.isPressed()) {
-            this.sellEnabled = !this.sellEnabled;
+        if (KeyBinds.FishingModeKey.isPressed()) {
+            fishingEnabled = !fishingEnabled;
+            AutoFish = fishingEnabled;
 
-            String status = this.sellEnabled ? "§aEnabled" : "§cDisabled";
-            String prefix = "§eAuto§bSell ";
+            String status = this.fishingEnabled ? "§aEnabled" : "§cDisabled";
+            String prefix = "§eFishing§bMode ";
             String messageBold = prefix + status;
 
             mc.thePlayer.addChatMessage(new ChatComponentTranslation(messageBold, new Object[0]));
@@ -158,7 +159,7 @@ public class Autofish {
                     int sleepRandom = new Random().nextInt(4);
                     Thread.sleep(sleepRandom * 1000);
 
-                    if (sellEnabled) {
+                    if (fishingEnabled) {
                         inventoryHandler();
                     }
                 } catch (InterruptedException e) {
@@ -217,7 +218,7 @@ public class Autofish {
     }
 
     public boolean isAutoFishEnabled() {
-        return this.AutoFish;
+        return AutoFish;
     }
 
     public boolean isSoundManagerEnabled() {
