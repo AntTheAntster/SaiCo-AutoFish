@@ -152,18 +152,15 @@ public class Autofish {
                     Thread.sleep(137);
                     mc.addScheduledTask(() -> {
                         mc.playerController.sendUseItem((EntityPlayer)mc.thePlayer, (World)mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
+                        sellQueued = false;
                     });
 
-                    if (sellQueued){
-                        return;
-                    }
+
                     int sleepRandom = new Random().nextInt(4);
                     Thread.sleep(sleepRandom * 1000);
-                    sellQueued = true;
 
                     if (sellEnabled) {
                         inventoryHandler();
-                        sellQueued = false;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -267,7 +264,12 @@ public class Autofish {
 
                 for (String item : blacklistedItems){
                     if (itemName.equals(item)){
-                        mc.thePlayer.sendChatMessage("/sell all");
+
+                        if (!sellQueued) {
+                            sellQueued = true;
+                            mc.thePlayer.sendChatMessage("/sell all");
+                        }
+
                     }
 
                 }
