@@ -9,7 +9,9 @@
  */
 package uk.co.anttheantster.Autofish.proxy;
 
-import uk.co.anttheantster.Autofish.Autofish;
+import uk.co.anttheantster.Autofish.command.AutoEatCommand;
+import uk.co.anttheantster.Autofish.command.GapAlertCommand;
+import uk.co.anttheantster.Autofish.modules.Autofish;
 import uk.co.anttheantster.Autofish.command.Tomm1kCommand;
 import uk.co.anttheantster.Autofish.command.MuteFishCommand;
 import net.minecraft.command.ICommand;
@@ -28,6 +30,8 @@ public class ClientProxy
     public void initMod() {
         ClientCommandHandler.instance.registerCommand((ICommand)new Tomm1kCommand());
         ClientCommandHandler.instance.registerCommand((ICommand)new MuteFishCommand());
+        ClientCommandHandler.instance.registerCommand((ICommand)new GapAlertCommand());
+        ClientCommandHandler.instance.registerCommand((ICommand)new AutoEatCommand());
 
     }
 }

@@ -1,29 +1,32 @@
 package uk.co.anttheantster.Autofish.command;
 
-import uk.co.anttheantster.Autofish.modules.Autofish;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ChatComponentTranslation;
+import uk.co.anttheantster.Autofish.utils.Config;
 
-public class MuteFishCommand extends CommandBase {
+public class AutoEatCommand extends CommandBase {
+
     @Override
     public String getCommandName() {
-        return "mutefish";
+        return "autoeat";
     }
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/mutefish";
+        return "/autoeat - Toggles Auto Eat on/off";
     }
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 
-        Autofish.instance.toggleMuteFish();
-        String status = Autofish.instance.isMuteFishEnabled() ? "\u00a7aEnabled" : "\u00a7cDisabled";
-        sender.addChatMessage((IChatComponent)new ChatComponentText("\u00a7a\u00a7lMuteFish " + status));
+        Config.instance.toggleAutoEat();
+        String prefix = "§eAuto§bEat ";
+        String status = Config.instance.gapAlertEnabled ? "§aEnabled" : "§cDisabled";
+        String message = prefix + status;
+
+        sender.addChatMessage(new ChatComponentTranslation(message));
     }
 
     @Override
@@ -35,4 +38,6 @@ public class MuteFishCommand extends CommandBase {
     public int getRequiredPermissionLevel() {
         return 0;
     }
+
+
 }

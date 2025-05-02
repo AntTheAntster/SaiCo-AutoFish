@@ -1,9 +1,6 @@
-package uk.co.anttheantster.Autofish;
+package uk.co.anttheantster.Autofish.modules;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import uk.co.anttheantster.Autofish.InventoryScanner;
 import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -25,6 +22,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.config.Configuration;
+import uk.co.anttheantster.Autofish.SoundManager;
+
 import java.io.File;
 import java.util.*;
 
@@ -91,9 +90,9 @@ public class Autofish {
             }
 
             String status = this.AutoFish ? "§aEnabled" : "§cDisabled";
-            String autofishBold = "§f§lAuto§b§lFish";
-            String messageBold = "§c§lAnt's Saico Fish " + autofishBold + " " + status;
-            String messageBoldSound = "§c§lPlease Enable Sound§d§l For it to work ";
+            String prefix = "§eAuto§bFish ";
+            String messageBold = prefix + status;
+            String messageBoldSound = "§c&lPlease Enable Sound For it to work ";
 
 
             Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBold, new Object[0]));
@@ -107,8 +106,8 @@ public class Autofish {
             this.sellEnabled = !this.sellEnabled;
 
             String status = this.sellEnabled ? "§aEnabled" : "§cDisabled";
-            String autosellBold = "§f§lAuto§b§lSell";
-            String messageBold = "§c§lAnt's SaiCo Fish " + autosellBold + " " + status;
+            String prefix = "§eAuto§bSell ";
+            String messageBold = prefix + status;
 
             mc.thePlayer.addChatMessage(new ChatComponentTranslation(messageBold, new Object[0]));
         }

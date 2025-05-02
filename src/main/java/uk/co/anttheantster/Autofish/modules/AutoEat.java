@@ -1,4 +1,4 @@
-package uk.co.anttheantster.Autofish.utils;
+package uk.co.anttheantster.Autofish.modules;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentTranslation;
@@ -8,9 +8,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
-
-import java.util.ArrayList;
-import java.util.List;
+import uk.co.anttheantster.Autofish.utils.Config;
 
 public class AutoEat {
 
@@ -28,7 +26,7 @@ public class AutoEat {
             this.autoEatEnabled = !this.autoEatEnabled;
 
             String status = this.autoEatEnabled ? "§aEnabled!" : "§cDisabled!";
-            String prefix = "§fAuto§bEat ";
+            String prefix = "§eAuto§bEat ";
             String message = prefix + status;
 
             mc.thePlayer.addChatMessage(new ChatComponentTranslation(message));
@@ -37,6 +35,8 @@ public class AutoEat {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (!Config.instance.autoEatEnabled){ return; }
+
         if (event.phase != TickEvent.Phase.END) {
             return;
         }

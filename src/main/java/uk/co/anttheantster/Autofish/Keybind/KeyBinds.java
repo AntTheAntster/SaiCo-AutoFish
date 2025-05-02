@@ -9,6 +9,7 @@ public class KeyBinds {
     public static KeyBinding AutofishKey;
     public static KeyBinding AutoSellKey;
     public static KeyBinding AutoEatKey;
+    public static KeyBinding DebugKey;
 
     public KeyBinds() {
     }

@@ -1,6 +1,6 @@
 package uk.co.anttheantster.Autofish.command;
 
-import uk.co.anttheantster.Autofish.Autofish;
+import uk.co.anttheantster.Autofish.modules.Autofish;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
