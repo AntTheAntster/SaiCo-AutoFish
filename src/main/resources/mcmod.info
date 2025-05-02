@@ -1,8 +1,8 @@
 [
 {
-  "modid": "antssaicoautofish",
+  "modid": "antssaicoutilities",
   "name": "Ant's Saico AutoFish",
-  "description": "Edit of UselessDuck's AutoFish mod for Saico.\nAdds a toggleable auto sell (via /sell all) after certain items are caught.\nAlso tidied up some useless and strange code. :)",
+  "description": "Adds a collection of useful misc stuff. Currently contains:\nUselessDuck's Saico AutoFish\nAnt's Saico AutoSell\nAnt's Gapple Alerts\nAnt's Saico AutoEat",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://anttheantster.co.uk",
