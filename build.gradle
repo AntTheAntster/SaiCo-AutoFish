@@ -14,7 +14,7 @@ plugins {
 
 apply plugin: "net.minecraftforge.gradle.forge"
 
-version = "2.0.2_b1"
+version = "2.0.2_b2"
 group = "uk.co.anttheantster.utilities"
 archivesBaseName = "Ant's Saico Utilities"
 
