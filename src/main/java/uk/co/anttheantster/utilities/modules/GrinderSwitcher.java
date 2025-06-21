@@ -11,7 +11,7 @@ public class GrinderSwitcher {
 
     protected final Minecraft mc = Minecraft.getMinecraft();
 
-    public static boolean grinderModeEnabled = true;
+    public static boolean grinderModeEnabled = false;
 
 
     @SubscribeEvent
