@@ -15,7 +15,7 @@ public class KeyBinds {
 
     public static void register() {
         ClientRegistry.registerKeyBinding(KeyBinds.GrinderKey = new KeyBinding(new ChatComponentTranslation("Ant's Grinder",
-                new Object[0]).getFormattedText(), Keyboard.KEY_F7, "Ant's Utilities"));
+                new Object[0]).getFormattedText(), Keyboard.KEY_F10, "Ant's Utilities"));
 
         ClientRegistry.registerKeyBinding(KeyBinds.FishingModeKey = new KeyBinding(new ChatComponentTranslation("Ant's FishingMode",
                 new Object[0]).getFormattedText(), Keyboard.KEY_F9, "Ant's Utilities"));
