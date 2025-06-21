@@ -1,26 +1,28 @@
-package uk.co.anttheantster.Autofish;
+package uk.co.anttheantster.utilities;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.SidedProxy;
-import uk.co.anttheantster.Autofish.modules.Autofish;
-import uk.co.anttheantster.Autofish.modules.GapAlert;
-import uk.co.anttheantster.Autofish.proxy.CommonProxy;
+import uk.co.anttheantster.utilities.modules.Autofish;
+import uk.co.anttheantster.utilities.modules.GapAlert;
+import uk.co.anttheantster.utilities.modules.GrinderSwitcher;
+import uk.co.anttheantster.utilities.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.MinecraftForge;
-import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
-import uk.co.anttheantster.Autofish.modules.AutoEat;
+import uk.co.anttheantster.utilities.Keybind.KeyBinds;
+import uk.co.anttheantster.utilities.modules.AutoEat;
 
-@Mod(modid = AutofishMod.ModID)
-public class AutofishMod {
+@Mod(modid = UtilitiesMod.ModID)
+public class UtilitiesMod {
     public static final String ModID = "antssaicoutilities";
-    @Mod.Instance("Autofish")
-    @SidedProxy(clientSide = "uk.co.anttheantster.Autofish.proxy.ClientProxy", serverSide = "uk.co.anttheantster.Autofish.CommonProxy")
+    @Mod.Instance("utilities")
+    @SidedProxy(clientSide = "uk.co.anttheantster.utilities.proxy.ClientProxy", serverSide = "uk.co.anttheantster.utilities.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler
     public void onPreInit(final FMLPreInitializationEvent event) {
-        AutofishMod.proxy.registerEvents(event);
+        UtilitiesMod.proxy.registerEvents(event);
+        MinecraftForge.EVENT_BUS.register(new GrinderSwitcher());
         MinecraftForge.EVENT_BUS.register(new Autofish());
         MinecraftForge.EVENT_BUS.register(new InventoryScanner());
         MinecraftForge.EVENT_BUS.register(new SoundManager());
@@ -30,7 +32,7 @@ public class AutofishMod {
 
     @Mod.EventHandler
     public void init(final FMLInitializationEvent event) {
-        AutofishMod.proxy.initMod();
+        UtilitiesMod.proxy.initMod();
         KeyBinds.register();
         populateLists();
     }

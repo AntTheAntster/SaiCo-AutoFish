@@ -1,7 +1,7 @@
-package uk.co.anttheantster.Autofish.modules;
+package uk.co.anttheantster.utilities.modules;
 
-import uk.co.anttheantster.Autofish.InventoryScanner;
-import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
+import uk.co.anttheantster.utilities.InventoryScanner;
+import uk.co.anttheantster.utilities.Keybind.KeyBinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.config.Configuration;
-import uk.co.anttheantster.Autofish.SoundManager;
+import uk.co.anttheantster.utilities.SoundManager;
 
 import java.io.File;
 import java.util.*;
@@ -79,27 +79,13 @@ public class Autofish {
     @SubscribeEvent
     @SideOnly(value = Side.CLIENT)
     public void onKeyInput(InputEvent.KeyInputEvent e) {
-        if (KeyBinds.AutofishKey.isPressed()) {
-            this.AutoFish = !this.AutoFish;
-            if (!this.AutoFish) {
-                // AutoFish is being turned off
-                this.inventoryScanner.triggerFinalCheck();
-            } else {
-                // AutoFish is being turned on
-                this.soundManager.onAutoFishEnabled();
-            }
+        if (KeyBinds.GrinderKey.isPressed()) {
+            GrinderSwitcher.grinderModeEnabled = !GrinderSwitcher.grinderModeEnabled;
+            String status = GrinderSwitcher.grinderModeEnabled ? "§aEnabled" : "§cDisabled";
+            String prefix = "§eGrinder§bMode ";
+            String message = prefix + status;
 
-            String status = this.AutoFish ? "§aEnabled" : "§cDisabled";
-            String prefix = "§eAuto§bFish ";
-            String messageBold = prefix + status;
-            String messageBoldSound = "§c&lPlease Enable Sound For it to work ";
-
-
-            Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBold, new Object[0]));
-            float masterVolume = mc.gameSettings.getSoundLevel(SoundCategory.MASTER);
-            if (masterVolume == 0.0F) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage((IChatComponent) new ChatComponentTranslation(messageBoldSound, new Object[0]));;
-            }
+            mc.thePlayer.addChatMessage(new ChatComponentTranslation(message, new Object[0]));
         }
 
         if (KeyBinds.FishingModeKey.isPressed()) {
@@ -108,9 +94,15 @@ public class Autofish {
 
             String status = this.fishingEnabled ? "§aEnabled" : "§cDisabled";
             String prefix = "§eFishing§bMode ";
-            String messageBold = prefix + status;
+            String message = prefix + status;
+            String messageSound = "§cPlease Enable Sound For it to work ";
 
-            mc.thePlayer.addChatMessage(new ChatComponentTranslation(messageBold, new Object[0]));
+            float masterVolume = mc.gameSettings.getSoundLevel(SoundCategory.MASTER);
+            if (masterVolume == 0.0F) {
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation(messageSound, new Object[0]));;
+            }
+
+            mc.thePlayer.addChatMessage(new ChatComponentTranslation(message, new Object[0]));
         }
     }
 

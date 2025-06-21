@@ -1,24 +1,20 @@
-package uk.co.anttheantster.Autofish.modules;
+package uk.co.anttheantster.utilities.modules;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import uk.co.anttheantster.Autofish.Keybind.KeyBinds;
-import uk.co.anttheantster.Autofish.utils.Config;
 
 public class AutoEat {
 
-    protected static final Minecraft mc = Minecraft.getMinecraft();
+    public static boolean eatEnabled = true;
 
+    protected static final Minecraft mc = Minecraft.getMinecraft();
     private boolean commandQueued = false;
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (!Config.instance.autoEatEnabled){ return; }
+        if (!eatEnabled){ return; }
 
         if (event.phase != TickEvent.Phase.END) {
             return;
@@ -31,7 +27,7 @@ public class AutoEat {
         String prefix = "§bAuto§eEat ";
         int hunger = mc.thePlayer.getFoodStats().getFoodLevel();
 
-        if (Config.instance.autoEatEnabled) {
+        if (eatEnabled) {
             if (hunger < 18){
                 if (!commandQueued) {
                     mc.thePlayer.sendChatMessage("/eat");

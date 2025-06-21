@@ -1,29 +1,30 @@
-package uk.co.anttheantster.Autofish.command;
+package uk.co.anttheantster.utilities.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
-import uk.co.anttheantster.Autofish.utils.Config;
+import uk.co.anttheantster.utilities.modules.GapAlert;
 
-public class AutoEatCommand extends CommandBase {
+public class GapAlertCommand extends CommandBase {
+
 
     @Override
     public String getCommandName() {
-        return "autoeat";
+        return "gapalert";
     }
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/autoeat - Toggles Auto Eat on/off";
+        return "/gapalert - Toggles Gapple alerts on/off";
     }
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 
-        Config.instance.toggleAutoEat();
-        String prefix = "§eAuto§bEat ";
-        String status = Config.instance.gapAlertEnabled ? "§aEnabled" : "§cDisabled";
+        GapAlert.gapAlertEnabled = !GapAlert.gapAlertEnabled;
+        String prefix = "§eGapple§bAlert ";
+        String status = GapAlert.gapAlertEnabled ? "§aEnabled" : "§cDisabled";
         String message = prefix + status;
 
         sender.addChatMessage(new ChatComponentTranslation(message));

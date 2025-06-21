@@ -1,4 +1,4 @@
-package uk.co.anttheantster.Autofish;
+package uk.co.anttheantster.utilities;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import uk.co.anttheantster.Autofish.modules.Autofish;
+import uk.co.anttheantster.utilities.modules.Autofish;
 
 public class InventoryScanner {
     private static final int SCAN_INTERVAL = 10;

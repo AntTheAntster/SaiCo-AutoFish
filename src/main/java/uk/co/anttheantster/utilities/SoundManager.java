@@ -1,4 +1,4 @@
-package uk.co.anttheantster.Autofish;
+package uk.co.anttheantster.utilities;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import uk.co.anttheantster.Autofish.modules.Autofish;
+import uk.co.anttheantster.utilities.modules.Autofish;
 
 public class SoundManager {
     private static final String SOUND_DIRECTORY = "autofish";

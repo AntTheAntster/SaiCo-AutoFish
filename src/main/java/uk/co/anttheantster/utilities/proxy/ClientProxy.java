@@ -7,13 +7,13 @@
  *  net.minecraftforge.common.MinecraftForge
  *  net.minecraftforge.fml.common.event.FMLPreInitializationEvent
  */
-package uk.co.anttheantster.Autofish.proxy;
+package uk.co.anttheantster.utilities.proxy;
 
-import uk.co.anttheantster.Autofish.command.AutoEatCommand;
-import uk.co.anttheantster.Autofish.command.GapAlertCommand;
-import uk.co.anttheantster.Autofish.modules.Autofish;
-import uk.co.anttheantster.Autofish.command.Tomm1kCommand;
-import uk.co.anttheantster.Autofish.command.MuteFishCommand;
+import uk.co.anttheantster.utilities.command.AutoEatCommand;
+import uk.co.anttheantster.utilities.command.GapAlertCommand;
+import uk.co.anttheantster.utilities.modules.Autofish;
+import uk.co.anttheantster.utilities.command.Tomm1kCommand;
+import uk.co.anttheantster.utilities.command.MuteFishCommand;
 import net.minecraft.command.ICommand;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;

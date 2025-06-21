@@ -1,13 +1,14 @@
-package uk.co.anttheantster.Autofish.modules;
+package uk.co.anttheantster.utilities.modules;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import uk.co.anttheantster.Autofish.utils.Config;
 
 public class GapAlert {
+
+    public static boolean gapAlertEnabled = true;
 
     protected static Minecraft mc = Minecraft.getMinecraft();
     public boolean hasGap;
@@ -17,7 +18,7 @@ public class GapAlert {
     public void onClentTick(TickEvent.ClientTickEvent event) {
         if (mc.thePlayer == null || mc.theWorld == null) { return; }
 
-        if (!Config.instance.gapAlertEnabled) {
+        if (!gapAlertEnabled) {
             return;
         }
 

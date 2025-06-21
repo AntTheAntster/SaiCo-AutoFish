@@ -1,8 +1,7 @@
-package uk.co.anttheantster.Autofish.utils;
+package uk.co.anttheantster.utilities.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
 
 public class Debug {
 
